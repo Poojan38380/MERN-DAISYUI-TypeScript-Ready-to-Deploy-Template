@@ -1,0 +1,6 @@
+{
+  "watch": ["server"],
+  "ext": "ts",
+  "ignore": ["dist", "node_modules", "client"],
+  "exec": "ts-node-dev server/server.ts"
+}
