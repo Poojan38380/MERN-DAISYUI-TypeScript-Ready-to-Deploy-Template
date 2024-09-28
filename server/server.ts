@@ -1,37 +1,29 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
-import { auth, requiresAuth } from "express-openid-connect";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import path from "path";
+import UserRouter from "./routes/user.routes";
 
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: "a long, randomly-generated string stored in env",
-  baseURL: "http://localhost:3001",
-  clientID: "Y7I0pDWD3N6dhq2AKLlR8cJApFDxPZIg",
-  issuerBaseURL: "https://dev-abxb67rnhbgf2y3e.us.auth0.com",
-};
-
-const app = express();
+const PORT = process.env.PORT || 3001;
 
 dotenv.config();
-const port = process.env.PORT || 3001;
+const app = express();
+app.use(cors());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, TypeScript with Express!");
-});
+app.use(express.json());
+app.use(cookieParser());
 
-// auth router attaches /login, /logout, and /callback routes to the baseURL
-app.use(auth(config));
+app.use(cors());
 
-// req.isAuthenticated is provided from the auth router
-app.get("/status", (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
-});
+app.use("/api/users", UserRouter);
 
-app.get("/profile", requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
-});
+// app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+// });
+
+app.listen(PORT, () => {
+  console.log(`Server listening on http://localhost:${PORT}`);
 });
