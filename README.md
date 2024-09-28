@@ -1,4 +1,4 @@
-# MERN DAISYUI Ready-to-Deploy Template
+# MERN DAISYUI(100% TypeScript) Ready-to-Deploy Template
 
 This repository provides a fully functional web app template using the MERN stack(100% TypeScript), along with login/signup functionality. The app is fully responsive and uses **Prisma**, **Daisy UI**, **Tailwind CSS**, and includes an example `.env` file for easy configuration.
 
